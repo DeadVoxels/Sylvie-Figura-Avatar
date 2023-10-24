@@ -1,6 +1,7 @@
 -- Auto generated script file --
 
 --hide vanilla model
+
 vanilla_model.PLAYER:setVisible(false)
 
 vanilla_model.ARMOR:setVisible(false)
@@ -17,6 +18,9 @@ models.Sylvie:setSecondaryRenderType("EYES")
 local BackpackCheck = false
 
 local BackpackTog = false
+
+local familyGuyDeath = false
+local inDeathAnimation = false
 
 local AccessoriesIco
 if host:isHost() then
@@ -82,6 +86,19 @@ function events.tick()
     :setPos(player:getPos())
     :play()
     _hp = hp
+  end
+  local dying = hp == 0
+  if dying and not inDeathAnimation then
+    inDeathAnimation = true
+    familyGuyDeath = math.random(0, 25) == 0
+    if familyGuyDeath then
+      animations.Sylvie.familyguy:play()
+      models.Sylvie:setRot(0, client:getCameraDir().y + 90, -90)
+    end
+  elseif not dying and inDeathAnimation then
+    inDeathAnimation = false
+    animations.Sylvie.familyguy:stop()
+    models.Sylvie:setRot(0, 0, 0)
   end
 end
 
