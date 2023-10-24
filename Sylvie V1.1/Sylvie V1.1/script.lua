@@ -90,10 +90,10 @@ function events.tick()
   local dying = hp == 0
   if dying and not inDeathAnimation then
     inDeathAnimation = true
-    familyGuyDeath = math.random(0, 25) == 0
+    familyGuyDeath = math.random(1, 25) == 1
     if familyGuyDeath then
       animations.Sylvie.familyguy:play()
-      models.Sylvie:setRot(0, client:getCameraDir().y + 90, -90)
+      models.Sylvie:setRot(0, player:getRot().y - client:getCameraRot().y - 90, -90)
     end
   elseif not dying and inDeathAnimation then
     inDeathAnimation = false
